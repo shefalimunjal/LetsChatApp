@@ -1,0 +1,11 @@
+syntax = "proto3";
+option optimize_for = SPEED;
+option java_package = "routing";
+
+message Route {
+    // a node should not have a value though this is not enforced
+    int64 id = 1;
+    string path = 2;
+    string payload = 3;
+    int64 sendTs = 4; //added by me
+}
