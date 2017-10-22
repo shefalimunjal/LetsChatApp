@@ -72,7 +72,7 @@ public class ServerInit extends ChannelInitializer<SocketChannel> {
 		public Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception{
 			for (int i = 0; i < in.readableBytes(); i ++) {
 			     byte b = in.getByte(i);
-			     System.out.println("byte char: " + (char) b + ", byte: " + b);
+//			     System.out.println("byte char: " + (char) b + ", byte: " + b);
 			 }
 			
 			System.out.println("time: " + System.nanoTime() + ", byte count: " + in.readableBytes());

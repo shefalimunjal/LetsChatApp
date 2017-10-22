@@ -3,28 +3,38 @@ import socket
 from pipe_pb2 import Route
 from encoder_decoder import LengthFieldProtoEncoder
 from threading import Thread
+import urllib2
 from time import time
 
-
-TCP_IP = '127.0.0.1'
+# This is currently port and IP oof Nginx server
+TCP_IP = 'http://127.0.0.1'
 TCP_PORT = 8020
 BUFFER_SIZE = 1024
 
 
 class MessageClient:
-    def __init__(self, host, port, buffer_size):
-        self.host = host
-        self.port = port
+    def __init__(self, buffer_size):
         self.buffer_size = buffer_size
 
         self.encoder = LengthFieldProtoEncoder()
 
         self.s = None
+
+        #todo(Kannu: ) should fail if the http connection fails here, then should not continue
+        socket_address = self.__get_server_socket_address()
+        parts = socket_address.split(":")
+        self.host = parts[0]
+        self.port = int(parts[1])
+
         self.connect()
+
+    def __get_server_socket_address(self):
+        socket_address = urllib2.urlopen(TCP_IP + ":" + str(TCP_PORT)).read()
+        return socket_address
 
     def connect(self):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.s.connect((TCP_IP, TCP_PORT))
+        self.s.connect((self.host, self.port))
         print "client connected to server: " + self.__get_server_path()
 
         # listen to incoming data on a new thread
@@ -93,5 +103,5 @@ class MessageClient:
 
 
 
-mc = MessageClient(TCP_IP, TCP_PORT, BUFFER_SIZE)
+mc = MessageClient(BUFFER_SIZE)
 mc.start_cli()

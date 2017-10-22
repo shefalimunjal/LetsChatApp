@@ -72,44 +72,6 @@ public class MessageServer {
 	}
 
 	/**
-	 * initialize the server with a configuration of it's resources
-	 * 
-	 * @param cfg
-	 */
-	public MessageServer(File cfg) {
-		init(cfg);
-	}
-
-	private void init(File cfg) {
-		if (!cfg.exists())
-			throw new RuntimeException(cfg.getAbsolutePath() + " not found");
-		// resource initialization - how message are processed
-		BufferedInputStream br = null;
-		try {
-			byte[] raw = new byte[(int) cfg.length()];
-			br = new BufferedInputStream(new FileInputStream(cfg));
-			br.read(raw);
-			conf = JsonUtil.decode(new String(raw), RoutingConf.class);
-			if (!verifyConf(conf))
-				throw new RuntimeException("verification of configuration failed");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	private boolean verifyConf(RoutingConf conf) {
-		return (conf != null);
-	}
-
-	/**
 	 * initialize netty communication
 	 * 
 	 * @param port
@@ -162,44 +124,4 @@ public class MessageServer {
 			}
 		}
 	}
-
-	/**
-	 * help with processing the configuration information
-	 * 
-	 * @author gash
-	 *
-	 */
-	public static class JsonUtil {
-		private static JsonUtil instance;
-
-		public static void init(File cfg) {
-
-		}
-
-		public static JsonUtil getInstance() {
-			if (instance == null)
-				throw new RuntimeException("Server has not been initialized");
-
-			return instance;
-		}
-
-		public static String encode(Object data) {
-			try {
-				ObjectMapper mapper = new ObjectMapper();
-				return mapper.writeValueAsString(data);
-			} catch (Exception ex) {
-				return null;
-			}
-		}
-
-		public static <T> T decode(String data, Class<T> theClass) {
-			try {
-				ObjectMapper mapper = new ObjectMapper();
-				return mapper.readValue(data.getBytes(), theClass);
-			} catch (Exception ex) {
-				return null;
-			}
-		}
-	}
-
 }

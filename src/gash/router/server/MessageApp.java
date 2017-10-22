@@ -15,6 +15,9 @@
  */
 package gash.router.server;
 
+import gash.router.container.RoutingConf;
+import gash.router.redis.RedisCluster;
+
 import java.io.File;
 
 /**
@@ -31,11 +34,18 @@ public class MessageApp {
 			System.out.println("usage: server <config file>");
 			System.exit(1);
 		}
-
+		
 		File cf = new File(args[0]);
+		
 		try {
-			MessageServer svr = new MessageServer(cf);
+			RoutingConf conf = RoutingConf.fromFile(cf);
+			
+			SocketAddressHttpServer addressHttpServer = new SocketAddressHttpServer(conf);
+			addressHttpServer.start();
+			
+			MessageServer svr = new MessageServer(conf);
 			svr.startServer();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

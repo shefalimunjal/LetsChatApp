@@ -15,7 +15,6 @@
  */
 package gash.router.client;
 
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicReference;
@@ -23,7 +22,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import gash.router.server.ServerInit;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -33,6 +31,10 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import routing.Pipe.Route;
+
+import gash.router.client.CommInit;
+import gash.router.client.CommWorker;
+import gash.router.client.CommListener;;
 
 /**
  * provides an abstraction of the communication to the remote server.

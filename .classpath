@@ -10,5 +10,7 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-simple-1.7.2.jar"/>
 	<classpathentry kind="lib" path="/Users/kannumehta/Downloads/protobuf-java-3.2.0.jar"/>
+	<classpathentry kind="lib" path="/Users/kannumehta/Downloads/jar_files/commons-pool2-2.4.2.jar"/>
+	<classpathentry kind="lib" path="/Users/kannumehta/Downloads/jar_files/jedis-2.8.1.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
