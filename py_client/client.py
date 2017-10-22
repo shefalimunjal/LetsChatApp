@@ -20,7 +20,7 @@ class MessageClient:
 
         self.s = None
 
-        #todo(Kannu: ) should fail if the http connection fails here, then should not continue
+        #todo - should fail if the http connection fails here, then should not continue
         socket_address = self.__get_server_socket_address()
         parts = socket_address.split(":")
         self.host = parts[0]
@@ -30,6 +30,7 @@ class MessageClient:
 
     def __get_server_socket_address(self):
         socket_address = urllib2.urlopen(TCP_IP + ":" + str(TCP_PORT)).read()
+        print socket_address
         return socket_address
 
     def connect(self):
